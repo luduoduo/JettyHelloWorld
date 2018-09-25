@@ -1,0 +1,13 @@
+# Java class files
+*.class
+
+# IDEA Files
+.idea/
+*.iml
+
+# macos
+.DS_Store
+
+# for this project
+
+
