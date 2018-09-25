@@ -4,10 +4,13 @@
 # IDEA Files
 .idea/
 *.iml
+out/
+*/target/
 
 # macos
 .DS_Store
 
 # for this project
+
 
 
