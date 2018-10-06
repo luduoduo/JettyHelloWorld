@@ -8,12 +8,47 @@
     <artifactId>JettyHelloWorld</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
     <modules>
+        <module>JettyHWUtils</module>
         <module>JettyHWServer</module>
         <module>JettyHWFileServer</module>
         <module>JettyHWClient</module>
         <!--<module>JerseyHWServer</module>-->
     </modules>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jetty.version>9.4.11.v20180605</jetty.version>
+        <log4j2.version>2.5</log4j2.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-client</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

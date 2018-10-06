@@ -10,8 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.myhome.mycloud</groupId>
-    <artifactId>JettyHWFileServer</artifactId>
+    <artifactId>JettyHWUtils</artifactId>
     <version>1.0.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <build>
         <plugins>
@@ -31,11 +35,6 @@
                     <descriptors> <!--描述文件路径 -->
                         <descriptor>src/main/assembly/assembly.xml</descriptor>
                     </descriptors>
-                    <archive>
-                        <manifest>
-                            <mainClass>JettyHWFileServer</mainClass>
-                        </manifest>
-                    </archive>
                 </configuration>
                 <executions>
                     <execution>
@@ -50,11 +49,4 @@
         </plugins>
     </build>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.myhome.mycloud</groupId>
-            <artifactId>JettyHWUtils</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
 </project>
