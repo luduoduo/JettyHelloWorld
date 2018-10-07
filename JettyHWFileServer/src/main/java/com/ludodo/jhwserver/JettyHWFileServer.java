@@ -31,8 +31,6 @@ import java.util.Map;
 //log4j2
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.LoggerConfig;
 
 
 //utils
@@ -42,39 +40,22 @@ public class JettyHWFileServer {
 
     public static void main(String[] args) throws Exception {
         System.out.print("main entry\n");
-
-        //创建一个应用服务监听8080端口
-        Server server = new Server(8082);
-        System.out.print("new a handler as servlet\n");
-
-
-        System.out.println("class name is "+ JettyHWFileServer.class.getName());
-
-        //设置Log4j2
-        Logger logger = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
-        Logger logger1 = LogManager.getLogger(JettyHWFileServer.class);
-
         JettyHWUtils.configureLog4j2();
+        //设置Log4j2
+        Logger loggerRoot = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
+        Logger loggerFS = LogManager.getLogger(JettyHWFileServer.class);
+        loggerFS.trace("@ trace level");
+        loggerFS.debug("@ debug level");
+        loggerFS.info("@ info level");
+        loggerFS.warn("@ warn level");
+        loggerFS.error("@ error level");
+        loggerFS.fatal("@ fatal level");
 
-//        logger.trace("this is trace level");
-//        logger.debug("this is debug level");
-//        logger.info("this is info level");
-//        logger.warn("this is warn level");
-//        logger.error("this is error level");
-//        logger.fatal("this is fatal level");
 
-        logger.error("log4j2 ready 1!");
-        logger1.error("log4j2 ready 2!");
-
-//
-//        LoggerContext loggerContext = (LoggerContext) LogManager.getContext(false);
-//        Map<String, LoggerConfig> map = loggerContext.getConfiguration().getLoggers();
-//
-//
-//        for (LoggerConfig aLoggerConfig:map.values()) {
-//            System.out.println(aLoggerConfig.getName() + " : " + aLoggerConfig.getLevel());
-//        }
-
+        //创建一个应用服务监听端口
+        int port=8082;
+        Server server = new Server(port);
+        System.out.println("new a handler as servlet @"+port);
 
         //设置JETTY库里的一些log，需要使用完整名字空间，因为与Log4j2冲突
         final org.eclipse.jetty.util.log.Logger theLogger=org.eclipse.jetty.util.log.Log.getLogger(ResourceService.class);
@@ -85,12 +66,12 @@ public class JettyHWFileServer {
         resource_handler.setDirectoriesListed(true);    //允许访问文件夹
 
         String osType = System.getProperty("os.name").toLowerCase();
-        System.out.println("Current OS is " + osType);
+        loggerFS.info("Current OS is " + osType);
 
-        if (osType.indexOf("mac")>=100) {
+        if (osType.contains("mac")) {
             resource_handler.setWelcomeFiles(new String[]{ "null" });
             resource_handler.setResourceBase("/Users/lufei/Pictures/baobao");
-        }else if (osType.indexOf("linux")>=0) {
+        }else if (osType.contains("linux")) {
             resource_handler.setWelcomeFiles(new String[]{ "null" });
             resource_handler.setResourceBase("/home/lufei/Pictures/baobao");
         }else
@@ -99,8 +80,8 @@ public class JettyHWFileServer {
             resource_handler.setResourceBase("./JettyHWFileServer/src/main/resources");
         }
 
-        System.out.println("dir=" + resource_handler.getResourceBase());
-        System.out.println("WelcomeFiles=" + resource_handler.getWelcomeFiles()[0]);
+        loggerFS.info("dir=" + resource_handler.getResourceBase());
+        loggerFS.info("WelcomeFiles=" + resource_handler.getWelcomeFiles()[0]);
 
         HandlerList handlers = new HandlerList();
         //利用系统提供的两个handler类，装进HandlerList，它们被顺序执行

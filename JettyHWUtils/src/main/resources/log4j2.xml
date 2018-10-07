@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<configuration status="OFF">  
+  <appenders>
+    <!--控制台-->
+    <Console name="Console" target="SYSTEM_OUT">  
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>  
+    </Console>
+    <!--专门记录出错信息-->
+    <File name="ErrFile" fileName="logs/errorlog.txt" append="false">
+      <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+      <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+    </File>
+    <!--循环记录所有信息-->
+    <RollingFile name="RollingFile" fileName="logs/applog.txt"
+                 filePattern="log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+      <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+      <SizeBasedTriggeringPolicy size="1MB"/>
+    </RollingFile>
+  </appenders>
+
+  <loggers>  
+    <root level="error">
+      <appender-ref ref="Console"/>
+      <appender-ref ref="ErrFile"/>
+    </root>
+    <logger name="com.ludodo.jhwserver.JettyHWFileServer" level="error" additivity="false">
+      <appender-ref ref="Console"/>
+      <appender-ref ref="RollingFile"/>
+    </logger>
+  </loggers>
+</configuration>
+

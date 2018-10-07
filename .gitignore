@@ -11,6 +11,8 @@ out/
 .DS_Store
 
 # for this project
+log/
+logs/
 
 
 
