@@ -19,11 +19,11 @@
   </appenders>
 
   <loggers>  
-    <root level="error">
+    <root level="info">
       <appender-ref ref="Console"/>
       <appender-ref ref="ErrFile"/>
     </root>
-    <logger name="com.ludodo.jhwserver.JettyHWFileServer" level="error" additivity="false">
+    <logger name="com.ludodo.jhwserver.JettyHWFileServer" level="debug" additivity="false">
       <appender-ref ref="Console"/>
       <appender-ref ref="RollingFile"/>
     </logger>

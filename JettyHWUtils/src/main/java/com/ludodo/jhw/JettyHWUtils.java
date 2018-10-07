@@ -24,6 +24,7 @@ public class JettyHWUtils {
 
         Logger loggerRoot = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
 
+        loggerRoot.info("============ JettyHWUtils.configureLog4j2 ready ============");
         //show log4j2 conf
         for (LoggerConfig aLoggerConfig:map.values()) {
             String name=aLoggerConfig.getName();

@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.myhome.mycloud</groupId>
     <artifactId>JettyHWClient</artifactId>
     <version>1.0.0</version>
 
@@ -33,7 +32,7 @@
                     </descriptors>
                     <archive>
                         <manifest>
-                            <mainClass>JettyHWClient</mainClass>
+                            <mainClass>com.ludodo.jhwserver.JettyHWClient</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
