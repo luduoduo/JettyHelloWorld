@@ -183,7 +183,7 @@ public class JettyHWClient {
             System.out.println("发送请求....");
 
             //异步GET，send没有返回值，不像同步那样直接返回response
-            httpClient.newRequest("http://127.0.0.1:8080")
+            httpClient.newRequest("http://ludodo.net:8080")
                     .method(HttpMethod.GET)
                     .agent("JettyHWClient")
                     .timeout(4, TimeUnit.SECONDS)

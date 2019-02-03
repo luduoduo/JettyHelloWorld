@@ -64,5 +64,5 @@
             <artifactId>jetty-server</artifactId>
             <version>${jetty.version}</version>
         </dependency>
-</dependencies>
+    </dependencies>
 </project>

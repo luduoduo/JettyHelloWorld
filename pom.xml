@@ -11,6 +11,7 @@
     <modules>
         <module>JettyHWServer</module>
         <module>JettyHWClient</module>
+        <module>JettyExampleServer</module>
     </modules>
 
 
