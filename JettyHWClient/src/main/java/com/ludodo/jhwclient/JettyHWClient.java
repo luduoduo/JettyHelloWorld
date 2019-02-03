@@ -1,5 +1,6 @@
+package com.ludodo.jhwclient;
 
-//import java.io.IOException;
+import java.io.IOException;
 
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.ContentResponse;

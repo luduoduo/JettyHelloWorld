@@ -8,14 +8,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>JettyHWFileServer</artifactId>
     <version>1.0.0</version>
-
-    <artifactId>JettyHWServer</artifactId>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.version>9.4.11.v20180605</jetty.version>
-    </properties>
 
     <build>
         <plugins>
@@ -37,7 +32,7 @@
                     </descriptors>
                     <archive>
                         <manifest>
-                            <mainClass>com.ludodo.jhwserver.JettyHWServer</mainClass>
+                            <mainClass>com.ludodo.jhwserver.JettyHWFileServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -56,14 +51,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
+            <groupId>com.myhome.mycloud</groupId>
+            <artifactId>JettyHWUtils</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>
