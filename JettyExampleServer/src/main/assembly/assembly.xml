@@ -6,14 +6,14 @@
         <format>jar</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
-    <fileSets>
-        <!-- <fileSet> <directory>src/main/java</directory> <outputDirectory>/</outputDirectory>
-            </fileSet> -->
-        <fileSet>
-            <directory>${project.basedir}/src/main/java</directory>
-            <outputDirectory>/</outputDirectory>
-        </fileSet>
-    </fileSets>
+    <!--<fileSets>-->
+        <!--&lt;!&ndash; <fileSet> <directory>src/main/java</directory> <outputDirectory>/</outputDirectory>-->
+            <!--</fileSet> &ndash;&gt;-->
+        <!--<fileSet>-->
+            <!--<directory>${project.basedir}/src/main/java</directory>-->
+            <!--<outputDirectory>/</outputDirectory>-->
+        <!--</fileSet>-->
+    <!--</fileSets>-->
     <dependencySets>
         <dependencySet>
             <outputDirectory>/</outputDirectory>
