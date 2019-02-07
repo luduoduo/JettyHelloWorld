@@ -24,10 +24,6 @@ public class MinimalServlets
         // that is backed by an instance of a Servlet.
         // This handler then needs to be registered with the Server object.
 
-        //!!!!!!!!!!!
-        //存在运行错误，找不到org.eclipse.jetty.server.handler.ContextHandler$NoContext
-        //这个对象在Jetty 9.3以后被删除了
-        //!!!!!!!!!!!
         ServletHandler handler = new ServletHandler();
         server.setHandler(handler);
 
