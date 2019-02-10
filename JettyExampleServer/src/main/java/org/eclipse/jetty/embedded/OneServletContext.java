@@ -30,6 +30,7 @@ public class OneServletContext
         contextHandler.addServlet(contextHandler.addServlet(DumpServlet.class, "/dump/*"), "*.dump");
         contextHandler.addServlet(HelloServlet.class, "/hello/*");
         contextHandler.addServlet(DefaultServlet.class, "/");
+        contextHandler.addServlet(AsyncEchoServlet.class, "/async");
 
         contextHandler.addFilter(TestFilter.class,"/*", EnumSet.of(DispatcherType.REQUEST));
         contextHandler.addFilter(TestFilter.class,"/test", EnumSet.of(DispatcherType.REQUEST,DispatcherType.ASYNC));
@@ -52,12 +53,12 @@ public class OneServletContext
         contextHandler.addEventListener(new ServletRequestListener() {
             @Override
             public void requestInitialized(ServletRequestEvent servletRequestEvent) {
-                System.out.println("ServletRequestListener: " + "requestDestroyed");
+                System.out.println("ServletRequestListener: " + "requestInitialized >>>>>");
             }
 
             @Override
             public void requestDestroyed(ServletRequestEvent servletRequestEvent) {
-                System.out.println("ServletRequestListener: " + "requestInitialized");
+                System.out.println("ServletRequestListener: " + "requestDestroyed <<<<<");
             }
 
 
@@ -84,12 +85,12 @@ public class OneServletContext
         contextHandler.addEventListener(new ContextHandler.ContextScopeListener() {
             @Override
             public void enterScope(ContextHandler.Context context, Request request, Object reason) {
-                System.out.println("ContextScopeListener: " + "enterScope");
+//                System.out.println("ContextScopeListener: " + "enterScope");
             }
 
             @Override
             public void exitScope(ContextHandler.Context context, Request request) {
-                System.out.println("ContextScopeListener: " + "exitScope");
+//                System.out.println("ContextScopeListener: " + "exitScope");
             }
         });
 
@@ -117,8 +118,7 @@ public class OneServletContext
             System.out.println("getRequestURI is "+ ((Request)request).getRequestURI());
             System.out.println("getRequestURL is "+ ((Request)request).getRequestURL());
 
-            System.out.println("peer ip : "+ request.getRemoteAddr()+" : "+request.getRemotePort());
-            System.out.println("port <"+ request.getServerPort());
+            System.out.println("peer ip --> " + request.getRemoteAddr() + " : "+request.getRemotePort());
 
             chain.doFilter(request, response);
             System.out.println("TestFilter: postprocess");
