@@ -13,21 +13,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 public class AsyncEchoServlet extends HttpServlet
 {
+    static int servCounter=0;
+
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    protected synchronized void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        System.out.println("TID = " + Thread.currentThread().getId());
+
+        servCounter++;
+        System.out.println("Servlet, < " + servCounter + " > TID = " + Thread.currentThread().getId());
         //名不副实，不是开始什么，只是设置了异步模式
         //reponse不会在servie返回时提交，而是等到AsyncContext.complete() 被调用，或者超时
         AsyncContext asyncContext = request.startAsync(request, response);
         asyncContext.setTimeout(0);
         //asyncContext记录了request和response的stream，又记录在listener里，在异步操作时可以拿到
-        EchoListener echoListener = new EchoListener(asyncContext);
+        EchoListener echoListener = new EchoListener(asyncContext, servCounter);
         request.getInputStream().setReadListener(echoListener);
         response.getOutputStream().setWriteListener(echoListener);
     }
@@ -39,13 +42,15 @@ public class AsyncEchoServlet extends HttpServlet
         private final ServletInputStream input;
         private final ServletOutputStream output;
         private final AtomicBoolean ifComplete = new AtomicBoolean(false);
+        private final int number;
 
         //注意，宿主类可以访问内部类的私有构造函数
-        private EchoListener(AsyncContext asyncContext) throws IOException
+        private EchoListener(AsyncContext asyncContext, int number) throws IOException
         {
             this.asyncContext = asyncContext;
             this.input = asyncContext.getRequest().getInputStream();
             this.output = asyncContext.getResponse().getOutputStream();
+            this.number = servCounter;
         }
 
         @Override
@@ -63,11 +68,15 @@ public class AsyncEchoServlet extends HttpServlet
         @Override
         public void onWritePossible() throws IOException
         {
-            handleAsyncIO();
+            //提交response
+            asyncContext.complete();
+            System.out.println("asyncContext.complete < " + number + ">");
         }
 
         private void handleAsyncIO() throws IOException
         {
+//            System.out.println("id="+Thread.currentThread().getId());
+
             // This method is called:
             //   1) after first registering a WriteListener (ready for first write)
             //   2) after first registering a ReadListener iff write is ready
@@ -90,20 +99,17 @@ public class AsyncEchoServlet extends HttpServlet
                 if (read<0)
                 {
                     if (ifComplete.compareAndSet(false,true)) {
-//                        try {
-//                            int counter=10;
-//                            while (counter>0) {
-//                                System.out.println(Thread.currentThread().getId() + " : " + counter);
-//                                Thread.sleep(5000);
-//                                counter-=1;
-//                            }
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            int counter=1;
+                            while (counter>0) {
+                                System.out.println("In listener < " + number + " > + TID = " + Thread.currentThread().getId() + " : " + counter);
+                                Thread.sleep(5000);
+                                counter-=1;
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
-                        System.out.println("asyncContext.complete");
-                        //提交response
-                        asyncContext.complete();
                     }
                     break;
                 }

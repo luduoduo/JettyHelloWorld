@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 public class HelloServlet extends HttpServlet
 {
     final String greeting;
+    static int servCounter=0;
+
 
     public HelloServlet()
     {
@@ -45,7 +47,18 @@ public class HelloServlet extends HttpServlet
                           HttpServletResponse response ) throws ServletException,
                                                         IOException
     {
-        System.out.println("---------- HelloServlet GET ----------");
+        servCounter++;
+        System.out.println("---------- HelloServlet GET <"
+                + servCounter + " , "
+                + Thread.currentThread().getId()
+                + "> ----------");
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(

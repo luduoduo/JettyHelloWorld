@@ -2,13 +2,11 @@ package org.eclipse.jetty.embedded;
 
 import org.eclipse.jetty.http.HttpField;
 import org.eclipse.jetty.http.HttpFields;
-import org.eclipse.jetty.server.Connector;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.Response;
-import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 
 import javax.servlet.*;
 //import javax.servlet.http.HttpServlet;
@@ -19,7 +17,13 @@ public class OneServletContext
 {
     public static void main( String[] args ) throws Exception
     {
-        Server server = new Server(8080);
+        QueuedThreadPool threadPool = new QueuedThreadPool(6, 3, 120);
+        Server server = new Server(threadPool);
+
+        ServerConnector connector = new ServerConnector(server);
+        connector.setPort(8080);
+        server.setConnectors(new Connector[] {connector});
+
 
         ServletContextHandler contextHandler = new ServletContextHandler(
                 ServletContextHandler.SESSIONS);
@@ -53,12 +57,12 @@ public class OneServletContext
         contextHandler.addEventListener(new ServletRequestListener() {
             @Override
             public void requestInitialized(ServletRequestEvent servletRequestEvent) {
-                System.out.println("ServletRequestListener: " + "requestInitialized >>>>>");
+//                System.out.println("ServletRequestListener: " + "requestInitialized >>>>>");
             }
 
             @Override
             public void requestDestroyed(ServletRequestEvent servletRequestEvent) {
-                System.out.println("ServletRequestListener: " + "requestDestroyed <<<<<");
+//                System.out.println("ServletRequestListener: " + "requestDestroyed <<<<<");
             }
 
 
@@ -112,16 +116,16 @@ public class OneServletContext
         @Override
         public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
         {
-            System.out.println("TestFilter: preprocess");
-            System.out.println("getServletPath "+ ((Request)request).getServletPath());
-            System.out.println("getPathInfo is "+ ((Request)request).getPathInfo());
-            System.out.println("getRequestURI is "+ ((Request)request).getRequestURI());
-            System.out.println("getRequestURL is "+ ((Request)request).getRequestURL());
-
-            System.out.println("peer ip --> " + request.getRemoteAddr() + " : "+request.getRemotePort());
+//            System.out.println("TestFilter: preprocess");
+//            System.out.println("getServletPath "+ ((Request)request).getServletPath());
+//            System.out.println("getPathInfo is "+ ((Request)request).getPathInfo());
+//            System.out.println("getRequestURI is "+ ((Request)request).getRequestURI());
+//            System.out.println("getRequestURL is "+ ((Request)request).getRequestURL());
+//
+//            System.out.println("peer ip --> " + request.getRemoteAddr() + " : "+request.getRemotePort());
 
             chain.doFilter(request, response);
-            System.out.println("TestFilter: postprocess");
+//            System.out.println("TestFilter: postprocess");
             HttpFields fields=((Response) response).getHttpFields();
             for (HttpField httpField:fields) {
                 System.out.println(httpField.getName()+ " : " + httpField.getValue());
